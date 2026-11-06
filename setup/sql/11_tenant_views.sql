@@ -1,0 +1,12 @@
+CREATE SCHEMA IF NOT EXISTS {{NW}} COMMENT 'White-labeled portal data for Northwind Mobile (fictional): governed views scoped to this customer only.';
+CREATE OR REPLACE VIEW {{NW}}.devices COMMENT 'Device records for Northwind Mobile devices only' AS SELECT * FROM {{DATA}}.devices WHERE customer_id = 'CUST-01';
+CREATE OR REPLACE VIEW {{NW}}.repair_orders COMMENT 'Repair orders for Northwind Mobile devices only' AS SELECT * FROM {{DATA}}.repair_orders WHERE customer_id = 'CUST-01';
+CREATE OR REPLACE VIEW {{NW}}.facilities AS SELECT * FROM {{DATA}}.facilities;
+CREATE OR REPLACE VIEW {{NW}}.repair_partners AS SELECT * FROM {{DATA}}.repair_partners;
+CREATE OR REPLACE VIEW {{NW}}.device_models AS SELECT * FROM {{DATA}}.device_models;
+CREATE SCHEMA IF NOT EXISTS {{BA}} COMMENT 'White-labeled portal data for Bastion Protect (fictional): governed views scoped to this customer only.';
+CREATE OR REPLACE VIEW {{BA}}.devices COMMENT 'Device records for Bastion Protect devices only' AS SELECT * FROM {{DATA}}.devices WHERE customer_id = 'CUST-03';
+CREATE OR REPLACE VIEW {{BA}}.repair_orders COMMENT 'Repair orders for Bastion Protect devices only' AS SELECT * FROM {{DATA}}.repair_orders WHERE customer_id = 'CUST-03';
+CREATE OR REPLACE VIEW {{BA}}.facilities AS SELECT * FROM {{DATA}}.facilities;
+CREATE OR REPLACE VIEW {{BA}}.repair_partners AS SELECT * FROM {{DATA}}.repair_partners;
+CREATE OR REPLACE VIEW {{BA}}.device_models AS SELECT * FROM {{DATA}}.device_models;

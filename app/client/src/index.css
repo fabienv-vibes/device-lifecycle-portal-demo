@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@500;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import "@databricks/appkit-ui/styles.css";
+
+/* Platform theme: charcoal surfaces, platform blue, Roboto / Roboto Condensed.
+   Tenant accent is injected at runtime as --brand on the app root. */
+:root:root,
+:root:root.dark {
+  --brand: #04b2fc;
+  --brand-soft: rgba(4, 178, 252, 0.14);
+  --platform-blue: #04b2fc;
+  --radius: 0.75rem;
+  --background: #14191a;
+  --foreground: #e9eef0;
+  --card: #1c2224;
+  --card-foreground: #e9eef0;
+  --popover: #20272a;
+  --popover-foreground: #e9eef0;
+  --primary: var(--brand);
+  --primary-foreground: #0b0f10;
+  --secondary: #262e31;
+  --secondary-foreground: #e9eef0;
+  --muted: #232a2d;
+  --muted-foreground: #97a3a8;
+  --accent: #262e31;
+  --accent-foreground: #e9eef0;
+  --destructive: #ff6b5e;
+  --destructive-foreground: #0b0f10;
+  --success: #3ddc97;
+  --success-foreground: #0b0f10;
+  --warning: #f5a524;
+  --warning-foreground: #0b0f10;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: var(--brand);
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto', system-ui, sans-serif;
+}
+
+.font-heading {
+  font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+}
+
+.brand-text {
+  color: var(--brand);
+}
+
+.brand-bg-soft {
+  background: var(--brand-soft);
+}
+
+.brand-border {
+  border-color: var(--brand);
+}
+
+.tenant-band {
+  background:
+    radial-gradient(1200px 220px at 0% 0%, var(--brand-soft), transparent 70%),
+    linear-gradient(180deg, #192022 0%, #14191a 100%);
+}
+
+.platform-bar {
+  background: #0d1112;
+}
+
+.kpi-up {
+  color: var(--success);
+}
+
+.kpi-down {
+  color: var(--destructive);
+}
+
+.pass-pill {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+}
+
+.fail-pill {
+  color: var(--destructive);
+  background: color-mix(in srgb, var(--destructive) 14%, transparent);
+}
+
+.warn-pill {
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 14%, transparent);
+}
+
+.neutral-pill {
+  color: var(--muted-foreground);
+  background: var(--muted);
+}
+
+.bar-track {
+  background: var(--muted);
+}
+
+.bar-fill {
+  background: var(--brand);
+}
+
+.bar-fill-bad {
+  background: var(--destructive);
+}

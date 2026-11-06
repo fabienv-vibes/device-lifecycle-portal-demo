@@ -1,0 +1,46 @@
+CREATE OR REPLACE TABLE {{DATA}}._gen_models AS
+WITH m AS (
+SELECT * FROM VALUES
+ ('APL-12','Apple','iPhone 12','iPhone',DATE'2020-10-23',205,3.0),
+ ('APL-12P','Apple','iPhone 12 Pro','iPhone',DATE'2020-10-23',255,2.0),
+ ('APL-13','Apple','iPhone 13','iPhone',DATE'2021-09-24',290,6.0),
+ ('APL-13P','Apple','iPhone 13 Pro','iPhone',DATE'2021-09-24',370,4.0),
+ ('APL-13PM','Apple','iPhone 13 Pro Max','iPhone',DATE'2021-09-24',410,3.0),
+ ('APL-14','Apple','iPhone 14','iPhone',DATE'2022-09-16',365,6.0),
+ ('APL-14P','Apple','iPhone 14 Pro','iPhone',DATE'2022-09-16',465,5.0),
+ ('APL-14PM','Apple','iPhone 14 Pro Max','iPhone',DATE'2022-09-16',520,4.0),
+ ('APL-15','Apple','iPhone 15','iPhone',DATE'2023-09-22',455,5.0),
+ ('APL-15P','Apple','iPhone 15 Pro','iPhone',DATE'2023-09-22',565,4.0),
+ ('APL-15PM','Apple','iPhone 15 Pro Max','iPhone',DATE'2023-09-22',635,3.0),
+ ('APL-16','Apple','iPhone 16','iPhone',DATE'2024-09-20',585,2.5),
+ ('APL-16P','Apple','iPhone 16 Pro','iPhone',DATE'2024-09-20',745,2.0),
+ ('APL-16PM','Apple','iPhone 16 Pro Max','iPhone',DATE'2024-09-20',825,1.5),
+ ('SAM-S21','Samsung','Galaxy S21','Galaxy S',DATE'2021-01-29',140,2.5),
+ ('SAM-S22','Samsung','Galaxy S22','Galaxy S',DATE'2022-02-25',190,3.5),
+ ('SAM-S22U','Samsung','Galaxy S22 Ultra','Galaxy S',DATE'2022-02-25',270,2.5),
+ ('SAM-S23','Samsung','Galaxy S23','Galaxy S',DATE'2023-02-17',280,4.0),
+ ('SAM-S23U','Samsung','Galaxy S23 Ultra','Galaxy S',DATE'2023-02-17',390,3.0),
+ ('SAM-S24','Samsung','Galaxy S24','Galaxy S',DATE'2024-01-31',390,3.5),
+ ('SAM-S24U','Samsung','Galaxy S24 Ultra','Galaxy S',DATE'2024-01-31',545,2.5),
+ ('SAM-S25','Samsung','Galaxy S25','Galaxy S',DATE'2025-02-07',510,1.5),
+ ('SAM-S25U','Samsung','Galaxy S25 Ultra','Galaxy S',DATE'2025-02-07',700,1.0),
+ ('SAM-ZF5','Samsung','Galaxy Z Flip5','Galaxy Z',DATE'2023-08-11',320,1.5),
+ ('SAM-ZD5','Samsung','Galaxy Z Fold5','Galaxy Z',DATE'2023-08-11',600,1.0),
+ ('SAM-ZF6','Samsung','Galaxy Z Flip6','Galaxy Z',DATE'2024-07-24',440,1.0),
+ ('SAM-ZD6','Samsung','Galaxy Z Fold6','Galaxy Z',DATE'2024-07-24',800,0.8),
+ ('SAM-A54','Samsung','Galaxy A54','Galaxy A',DATE'2023-04-06',115,3.0),
+ ('SAM-A15','Samsung','Galaxy A15','Galaxy A',DATE'2023-12-16',55,3.0),
+ ('GOO-P7','Google','Pixel 7','Pixel',DATE'2022-10-13',145,2.0),
+ ('GOO-P8','Google','Pixel 8','Pixel',DATE'2023-10-12',235,2.5),
+ ('GOO-P8P','Google','Pixel 8 Pro','Pixel',DATE'2023-10-12',325,1.5),
+ ('GOO-P9','Google','Pixel 9','Pixel',DATE'2024-08-22',395,1.5),
+ ('GOO-P9P','Google','Pixel 9 Pro','Pixel',DATE'2024-08-22',510,1.0),
+ ('MOT-GP','Motorola','moto g power 5G','moto g',DATE'2024-03-01',45,2.0),
+ ('MOT-RZ','Motorola','razr+ 2024','razr',DATE'2024-06-24',370,0.8)
+AS t(model_id, oem, model, model_family, release_date, grade_a_value, w)
+),
+c AS (SELECT *, SUM(w) OVER (ORDER BY model_id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cum_hi, SUM(w) OVER () AS total_w FROM m)
+SELECT model_id, oem, model, model_family, release_date, CAST(grade_a_value AS DOUBLE) AS grade_a_value,
+  (cum_hi - w) / total_w AS lo, cum_hi / total_w AS hi,
+  CONCAT('35', LPAD(CAST(PMOD(XXHASH64(model_id), 999999) AS STRING), 6, '0')) AS tac
+FROM c

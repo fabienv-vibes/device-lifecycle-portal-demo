@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+dist/
+client/dist/
+.env
+.databricks/
+__pycache__/
+*.pyc

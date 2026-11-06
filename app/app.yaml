@@ -1,0 +1,12 @@
+command: ['npm', 'run', 'start']
+env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse
+  - name: DATABRICKS_GENIE_SPACE_ID
+    valueFrom: genie-space
+  - name: GENIE_SPACE_OPS
+    valueFrom: genie-space
+  - name: GENIE_SPACE_NORTHWIND
+    valueFrom: genie-space-northwind
+  - name: GENIE_SPACE_BASTION
+    valueFrom: genie-space-bastion
